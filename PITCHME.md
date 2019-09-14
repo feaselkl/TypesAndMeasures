@@ -85,6 +85,8 @@ The `int` type lets you use valid integers (typically within 4 bytes), so "Bob" 
 
 ---
 
+### Types
+
 With C#, we are used to defining types.
 
 ```csharp
@@ -98,6 +100,8 @@ var x = 6;
 ```
 
 ---
+
+### Types
 
 With F#, we are used to not defining types.
 
@@ -275,7 +279,7 @@ match result.ResponseCode with
 
 Values go here to die.
 
----?image=presentation/assets/background/selection.jpg&size=cover&opacity=20
+---?image=presentation/assets/background/selection.jpg&size=cover&opacity=40
 
 ### Why Have a Unit Type?
 
