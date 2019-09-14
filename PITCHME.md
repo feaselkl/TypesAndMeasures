@@ -273,8 +273,7 @@ match result.ResponseCode with
 
 Values go here to die.
 
-TODO:
----
+---?image=presentation/assets/background/selection.jpg&size=cover&opacity=20
 
 Why Have a Unit Type?
 
