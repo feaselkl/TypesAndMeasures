@@ -164,7 +164,7 @@ A tuple is a thing as much as it is a collection of things.
 
 If you are calling a C# (or VB.Net) function from F#, you may only pass in one thing.  If the BCL method has multiple required inputs, you must pass in a tuple.
 
----?image=presentation/assets/background/record.jpg&size=cover&opacity=20
+---?image=presentation/assets/background/record.jpg&size=cover&opacity=40
 
 ### Record Types
 
@@ -210,11 +210,13 @@ type DU =
 	| YetAnotherThing of type3
 ```
 
----
+---?image=presentation/assets/background/web.jpg&size=cover&opacity=20
 
 ### Why Sum Types?
 
 Sum types replace `if-else` logic and `try-catch` blocks.  Suppose we have a web request.
+
+---
 
 ```csharp
 try
