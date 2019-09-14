@@ -277,13 +277,11 @@ Values go here to die.
 
 ---?image=presentation/assets/background/selection.jpg&size=cover&opacity=20
 
-Why Have a Unit Type?
+### Why Have a Unit Type?
 
 Unit guarantees that our expressions always return a value.  This is part of the definition of an expression.  The unit type informs us that we don't care about the value, per se, but it is still a value.
 
 C# does not have a unit type and so void versus non-void methods need to remain separate.  This is why we have both `Func` and `Action`.
-
----
 
 ---?image=presentation/assets/background/demo.jpg&size=cover&opacity=20
 
@@ -384,6 +382,12 @@ With units of measure, we can:
 ---
 
 ### Classic Physics Problem
+
+<img src="presentation/assets/image/trains.jpg" />
+
+---
+
+### Less Classic Physics Problem
 
 <img src="presentation/assets/image/RandyJohnsonBird.jpg" />
 
