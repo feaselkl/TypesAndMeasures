@@ -67,4 +67,6 @@ circumference 12.8<ft> 9.6<inch>
 let speed (distance:float<_>) (time:float<_>) =
     distance / time
 
+// Our distance is 50 feet
+distance
 speed distance 0.37<s>
