@@ -112,7 +112,7 @@ let x = 6
 Unless we want to.
 
 ```fsharp
-let (x:int) = 6;
+let (x:int) = 6
 ```
 
 ---
@@ -127,7 +127,7 @@ let (x:int) = 6;
 
 The easiest way to avoid null pointer references?  Avoid `null`!
 
-F# has the `Option` type, which may be **either** `Some {object}` or `Nothing`.  Therefore, it always has a value and cannot be `null`.
+F# has the `Option` type, which may be **either** `Some {object}` or `None`.  Therefore, it always has a value and cannot be `null`.
 
 ---?image=presentation/assets/background/demo.jpg&size=cover&opacity=20
 
