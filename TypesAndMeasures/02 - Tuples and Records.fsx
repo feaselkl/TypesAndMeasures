@@ -54,6 +54,8 @@ prep 8.6
 // Back to tuples...
 // We can also deconstruct tuples into component parts.
 let x1, x2, x3, x4, x5 = multiX
+// We can work with component parts easily.
+x1 > 3
 // This lets us pack and unpack values using tuples.
 // We can also skip irrelevant values with the underscore!
 let y1, _, y3, _, _ = multiX
@@ -95,7 +97,7 @@ let getAirportSql iata =
     let airport = AirportSql.Create(conn).Execute(iata) |> Seq.exactlyOne
     airport
 
-getAirportSql "RDU"
+let rdu = getAirportSql "RDU"
 
 // We can reference record types with dot notation like in C#:
 printfn "%s" charlie.FirstName

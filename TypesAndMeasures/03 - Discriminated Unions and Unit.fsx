@@ -63,6 +63,31 @@ let findBetterShapeArea s =
 
 findBetterShapeArea e
 
+// We can combine sum and product types.  We saw product types in a sum type.
+// Now here is a sum type inside of a product type.
+type Pet =
+    | Dog of string
+    | Cat of string
+    | Rattlesnake of int
+
+type Person2 = {
+    FirstName:string;
+    LastName:string;
+    FavoritePet:Pet option
+}
+
+let emily = {
+    Person2.FirstName = "Emily";
+    LastName = "Anderson";
+    FavoritePet = Some (Rattlesnake 6)
+}
+
+let frank = {
+    FirstName = "Frank";
+    LastName = "Anderson";
+    FavoritePet = None
+}
+
 (* Demo 6:  Unit *)
 // Unit is a special element.  It is the representation of a category with a single element.
 // In simple terms, think of unit as a sink node:  values go there to die.
@@ -82,3 +107,6 @@ printSomething "This is another test."
 // Another option is to call the ignore() function, which accepts any input and returns unit.
 printSomething "Ignore my results" |> ignore
 // Now we get unit back and that will eliminate any warnings.
+// By the way, we define unit as empty parentheses:
+()
+
