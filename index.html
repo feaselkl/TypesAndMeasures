@@ -1,0 +1,488 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Catallaxy Services | Applying Forensic Accounting Techniques Using SQL and R</title>
+
+		<link rel="stylesheet" href="../reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="../WebsiteAssets/mods.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h2>Of Types and Measures</h2>
+					
+					<a href="https://www.catallaxyservices.com">Kevin Feasel</a> (<a href="https://twitter.com/feaselkl">@feaselkl</a>)<br />
+					<a href="https://csmore.info/on/types">https://csmore.info/on/types</a>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Who Am I?  What Am I Doing Here?</h3>
+					<div class="container">
+						<div class="col">
+							<table class="whoami">
+								<tr>
+									<td><a href="https://csmore.info"><img src="../WebsiteAssets/Logo.png" height="100" /></a></td>
+									<td nowrap><a href="https://csmore.info">Catallaxy Services</a></td>
+								</tr>
+								<tr>
+									<td><a href="https://curatedsql.com"><img src="../WebsiteAssets/CuratedSQLLogo.png" height="100" /></a></td>
+									<td nowrap><a href="https://curatedsql.com">Curated SQL</a></td>
+								</tr>
+								<tr>
+									<td><a href="https://www.apress.com/us/book/9781484254608"><img src="../WebsiteAssets/PolyBaseRevealed.png" height="120" /></a></td>
+									<td nowrap><a href="https://www.apress.com/us/book/9781484254608">PolyBase Revealed</a></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col">
+							<a href="http://www.twitter.com/feaselkl"><img src="../WebsiteAssets/HeadShot.jpg" height="358" width="315" /></a>
+							<br />
+							<a href="http://www.twitter.com/feaselkl">@feaselkl</a>
+						</div>					
+					</div>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/measure.jpg" data-background-opacity="0.2">
+					<h3>Types and Measures</h3>
+					
+					<p>All programming languages have types.  Some languages have more fleshed-out type systems than others.</p>
+
+					<p>Not all languages have the concept of a unit of measure.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/motivation.jpg" data-background-opacity="0.2">
+					<h3>Motivation</h3>
+					
+					<p>My goals in this talk:</p>
+
+					<ul>
+						<li>Give you a better understanding of types.</li>
+						<li>Walk through benefits of the F# type system, including custom types.</li>
+						<li>Help you understand sum types versus product types.</li>
+						<li>Explain units of measure and where they can help.</li>
+					</ul>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li class="active">The Types of Types</li>
+						<li>Product Types</li>
+						<li>Sum Types</li>
+						<li>The Unit Type</li>
+						<li>Custom Types</li>
+						<li>Units of Measure</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/birthday-candles.jpg" data-background-opacity="0.2">
+					<h3>What is a Type?</h3>
+					
+					<p>At its core, a <strong>type</strong> is a restriction limiting you to certain values.</p>
+
+					<p>The <code>int</code> type lets you use valid integers (typically within 4 bytes), so "Bob" will never be a proper integer but 3 is.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Why Have Types?</h3>
+					
+					<img src="presentation/assets/image/Wat.png" height="500" /><br />
+					<a href="https://www.destroyallsoftware.com/talks/wat">Wat</a>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Types</h3>
+					
+					<p>With C#, we are used to defining types.</p>
+
+					<pre><code data-trim><script type="text/template">
+					int x = 6;
+					</script></code></pre>
+					
+					<p>Unless we don't want to.</p>
+					
+					<pre><code data-trim><script type="text/template">
+					var x = 6;
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Types</h3>
+					
+					<p>With F#, we are used to not defining types.</p>
+
+					<pre><code data-trim><script type="text/template">
+					let x = 6
+					</script></code></pre>
+					
+					<p>Unless we want to.</p>
+					
+					<pre><code data-trim><script type="text/template">
+					let (x:int) = 6
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Option Types</h3>
+					
+					<img src="presentation/assets/image/NullPointer.png" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/choices.jpg" data-background-opacity="0.2">
+					<h3>Option Types</h3>
+					
+					<p>The easiest way to avoid null pointer references?  Avoid <code>null</code>!</p>
+
+					<p>F# has the <code>Option</code> type, which may be <strong>either</strong> <code>Some {object}</code> or <code>None</code>.  Therefore, it always has a value and cannot be <code>null</code>.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>The Types of Types</li>
+						<li class="active">Product Types</li>
+						<li>Sum Types</li>
+						<li>The Unit Type</li>
+						<li>Custom Types</li>
+						<li>Units of Measure</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/multiplication.jpg" data-background-opacity="0.2">
+					<h3>Product Types</h3>
+					
+					<p>Product types are the combination of multiple values.  The key product types we'll look at are <strong>tuples</strong> and <strong>record types</strong>.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/shoes.jpg" data-background-opacity="0.2">
+					<h3>Tuples</h3>
+					
+					<p>Tuples exist in F# and C# both, and with the <code>System.ValueTuple</code> library, C# gets many of the in-built F# advantages around tuples.</p>
+
+					<p>We write a tuple as a comma-separated list, like <code>(1, 2, 3, "Dog")</code> but the complier interprets it as <code>(int * int * int * string)</code>.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/pears.jpg" data-background-opacity="0.2">
+					<h3>Tuples and the BCL</h3>
+					
+					<p>A tuple is a thing as much as it is a collection of things.</p>
+
+					<p>If you are calling a C# (or VB.Net) function from F#, you may only pass in one thing.  If the BCL method has multiple required inputs, you must pass in a tuple.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/record.jpg" data-background-opacity="0.2">
+					<h3>Record Types</h3>
+					
+					<p>Record types are product types with labels for each input.  The "development feel" of a record type is similar to that of a <code>struct</code> over a class, as record types do not have associated methods, accessors, or mutators.</p>
+
+					<p>C# 9 has introduced record types.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>The Types of Types</li>
+						<li>Product Types</li>
+						<li class="active">Sum Types</li>
+						<li>The Unit Type</li>
+						<li>Custom Types</li>
+						<li>Units of Measure</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/abacus.jpg" data-background-opacity="0.2">
+					<h3>Sum Types</h3>
+					
+					<p>In contrast to product types, which are the <strong>product</strong> of multiple inputs, sum types are the <strong>sum</strong> of multiple inputs.</p>
+
+					<p>Another way to think of this is, product types chain together <code>AND</code> operations, while sum types chain <code>OR</code> operations.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Discriminated Union</h3>
+					
+					<p>In F#, the sum type is also known as a <strong>discriminated union</strong>.  We define a thing as one of the valid set.</p>
+					
+					<pre><code data-trim><script type="text/template">
+					type DU =
+						| Something of type1
+						| SomethingElse of type2
+						| YetAnotherThing of type3
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/web.jpg" data-background-opacity="0.2">
+					<h3>Why Sum Types?</h3>
+					
+					<p>Sum types replace <code>if-else</code> logic and <code>try-catch</code> blocks.  Suppose we have a web request.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<pre><code data-line-numbers="|1-4|5-8|10-13|14-17" data-trim><script type="text/template">
+					try
+					{
+						var result = GetResult(inputs);
+					}
+					catch (Exception ex)
+					{
+						throw new ServerSideError(ex);
+					}
+
+					if (result.ResponseCode == ResponseCodes.Success)
+					{
+						return result;
+					}
+					else
+					{
+						throw new InvalidResponseError(result);
+					}
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Why Sum Types?</h3>
+				
+					<pre><code data-trim><script type="text/template">
+					let result = GetResult inputs
+					match result.ResponseCode with
+						| ResponseCodes.Success -> result
+						| ResponseCodes.Failure -> buildFailure result
+						| ResponseCodes.ServerError -> buildServerError result
+					</script></code></pre>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>The Types of Types</li>
+						<li>Product Types</li>
+						<li>Sum Types</li>
+						<li class="active">The Unit Type</li>
+						<li>Custom Types</li>
+						<li>Units of Measure</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/water-hole.jpg" data-background-opacity="0.2">
+					<h3>The Unit Type</h3>
+					
+					<p><strong>Unit</strong> is the representation of a category with a single element.</p>
+
+					<p>Values go here to die.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/selection.jpg" data-background-opacity="0.2">
+					<h3>Why Have a Unit Type?</h3>
+					
+					<p>Unit guarantees that our expressions always return a value.  This is part of the definition of an expression.  The unit type informs us that we don't care about the value, per se, but it is still a value.</p>
+
+					<p>C# does not have a unit type and so void versus non-void methods need to remain separate.  This is why we have both <code>Func</code> and <code>Action</code>.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>The Types of Types</li>
+						<li>Product Types</li>
+						<li>Sum Types</li>
+						<li>The Unit Type</li>
+						<li class="active">Custom Types</li>
+						<li>Units of Measure</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/easel.jpg" data-background-opacity="0.2">
+					<h3>Custom Types</h3>
+					
+					<p>Sometimes the built-in types are too lax.  For example, we can represent a set of prime numbers as an array of integers, but that won't help us avoid slipping in a 4.</p>
+
+					<p>This is where custom types come into play.  In C#, you can build a class which behaves like a custom type would.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/no-parking.jpg" data-background-opacity="0.2">
+					<h3>Benefits</h3>
+					
+					<p>Additional rules narrow the range of acceptable values beyond what built-in types can handle.</p>
+
+					<p>Ensure at compile time that any value of this custom type is guaranteed to follow your rules.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Benefits</h3>
+					
+					<p>Prevent sending in the wrong parameter.</p>
+
+					<p>Ever done this before?</p>
+					
+					<pre><code data-trim><script type="text/template">
+					public int DoSomething (int x, int y) { ... }
+					DoSomething(y, x);
+					</script></code></pre>
+					
+					<p>That's because x and y are both integers, so the compiler can't protect us.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Benefits</h3>
+					
+					<p>But this is a lot harder to mess up:</p>
+					
+					<pre><code data-trim><script type="text/template">
+					public int DoSomething (CustomerID x, ProductID y);
+					DoSomething(y, x); // Compiler error!
+					</script></code></pre>
+					
+					<p>Hard to create a class for every possible field, however.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>The Types of Types</li>
+						<li>Product Types</li>
+						<li>Sum Types</li>
+						<li>The Unit Type</li>
+						<li>Custom Types</li>
+						<li class="active">Units of Measure</li>
+					</ol>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/suitmeasure.jpg" data-background-opacity="0.2">
+					<h3>Units of Measure</h3>
+					
+					<p>Units of measure are not available in C#.  These allow the F# compiler to prevent you from making units-based mistakes, like adding feet and pounds.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/suitmeasure.jpg" data-background-opacity="0.2">
+					<h3>Units of Measure</h3>
+					
+					<p>With units of measure, we can:</p>
+					
+					<ul>
+						<li>Define measures</li>
+						<li>Define conversion factors between units</li>
+						<li>Add and subtract values of the same unit</li>
+						<li>Multiply and divide values of different units</li>
+						<li>Solve physics problems</li>
+					</ul>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Classic Physics Problem</h3>
+					
+					<img src="presentation/assets/image/trains.jpg" />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Less Classic Physics Problem</h3>
+					
+					<img src="presentation/assets/image/RandyJohnsonBird.jpg" />
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+
+				<section data-background-image="presentation/assets/background/wrappingup.jpg" data-background-opacity="0.2">
+					<h3>Wrapping Up</h3>
+					
+					<p>F# extends the native .NET type system.  Important things we covered today include:</p>
+					
+					<ul>
+						<li>Option types</li>
+						<li>Product types (tuples and records)</li>
+						<li>Sum types (discriminated unions)</li>
+						<li>Unit type</li>
+						<li>Building custom types</li>
+						<li>Units of measure</li>
+					</ul>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Wrapping Up</h3>
+					
+					<p>
+						To learn more, go here:
+						<br />
+						<a href="https://csmore.info/on/types">https://csmore.info/on/types</a>
+					</p>
+					<br />
+					<p>
+						And for help, contact me:
+						<br />
+						<a href="mailto:feasel@catallaxyservices.com">feasel@catallaxyservices.com</a> | <a href="https://www.twitter.com/feaselkl">@feaselkl</a>
+					</p>
+					<br />
+					<p>
+						Catallaxy Services consulting:
+						<br />
+						<a href="https://csmore.info/contact">https://CSmore.info/on/contact</a>
+					</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal.js/dist/reveal.js"></script>
+		<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+		<script src="../reveal.js/plugin/notes/notes.js"></script>
+		<script src="../reveal.js/plugin/search/search.js"></script>
+		<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal.js/plugin/math/math.js"></script>
+		<script src="../reveal.js/plugin/menu/menu.js"></script>
+		<script src="../reveal.js/plugin/highlight/highlight.js"></script>
+		<script src="../reveal.js/plugin/chart/Chart.min.js"></script>
+		<script src="../reveal.js/plugin/chart/plugin.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				width: '70%',
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				transition: 'fade',
+				
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath, RevealMenu, RevealChart ]
+			});
+		</script>
+	</body>
+</html>
