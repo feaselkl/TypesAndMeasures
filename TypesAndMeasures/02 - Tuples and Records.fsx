@@ -81,23 +81,25 @@ let charlie = {
 // Record types are great when working with databases because
 // unlike objects, which have methods & properties,
 // record types are intended to hold data and nothing more.
-#r @"../packages/FSharp.Data.SqlClient.2.0.5/lib/net40/FSharp.Data.SqlClient.dll"
-open FSharp.Data
+// The following code shows an example of querying SQL Server from F# and building
+// a record type out of a T-SQL query.  Note that it also supports parameters, allowing us
+// to generate only the records we need from the database.
+// open FSharp.Data
 
-[<Literal>]
-let connectionString =
-    @"Data Source=LOCALHOST;Initial Catalog=Scratch;Integrated Security=True"
+// [<Literal>]
+// let connectionString =
+//     @"Data Source=LOCALHOST;Initial Catalog=Scratch;Integrated Security=True"
 
-type AirportSql = 
-    SqlCommandProvider<"SELECT IATA, Airport, City, State, Country, Lat, Long FROM dbo.Airports WHERE IATA = @IATA", connectionString>
+// type AirportSql = 
+//     SqlCommandProvider<"SELECT IATA, Airport, City, State, Country, Lat, Long FROM dbo.Airports WHERE IATA = @IATA", connectionString>
 
-let getAirportSql iata =
-    let conn = new System.Data.SqlClient.SqlConnection(connectionString)
-    conn.Open()
-    let airport = AirportSql.Create(conn).Execute(iata) |> Seq.exactlyOne
-    airport
+// let getAirportSql iata =
+//     let conn = new System.Data.SqlClient.SqlConnection(connectionString)
+//     conn.Open()
+//     let airport = AirportSql.Create(conn).Execute(iata) |> Seq.exactlyOne
+//     airport
 
-let rdu = getAirportSql "RDU"
+// let rdu = getAirportSql "RDU"
 
 // We can reference record types with dot notation like in C#:
 printfn "%s" charlie.FirstName
