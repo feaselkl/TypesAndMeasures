@@ -12,7 +12,7 @@ let multiX = (1, "Bob", true, 0.86M, 0.86)
 // The * here means 'times,' because this is a product type.
 // Alternatively, int AND string AND bool AND decimal AND float.
 
-// F# methods generally use currying + partial application
+// F# functions generally use currying + partial application
 let add x y =
     x + y
 let addOne x =
